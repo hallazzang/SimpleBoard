@@ -32,7 +32,9 @@
                                 -
                             </c:when>
                             <c:otherwise>
-                                ${article.file.name}
+                                <a href="${"/download?fileId=".concat(article.file.id)}">
+                                    ${article.file.name}
+                                </a>
                             </c:otherwise>
                         </c:choose>
                     </td>

@@ -16,10 +16,6 @@ import java.util.List;
 
 @WebServlet(name = "BoardController", urlPatterns = {"/board"})
 public class BoardController extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String boardId = request.getParameter("boardId");
         int page;

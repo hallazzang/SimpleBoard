@@ -100,6 +100,32 @@ public class FileDAO extends BaseDAO {
         return result;
     }
 
+    public static FileDTO getFile(int id) throws DatabaseException {
+        Connection conn = getConnection();
+
+        if (conn == null) {
+            throw new DatabaseException("Cannot connect to database");
+        }
+
+        FileDTO result;
+
+        try {
+            st = conn.prepareStatement("SELECT * FROM files WHERE id = ?;");
+            st.setInt(1, id);
+            rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            result = new FileDTO(rs.getInt("id"), rs.getString("name"), rs.getString("path"));
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        } finally {
+            cleanup();
+        }
+
+        return result;
+    }
+
     public static void deleteFile(int id) throws DatabaseException {
         Connection conn = getConnection();
 
