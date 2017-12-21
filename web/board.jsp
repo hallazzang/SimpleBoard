@@ -6,6 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/normalize.css">
     <style>
 
     </style>
@@ -34,7 +35,10 @@
         <tbody>
             <c:forEach var="article" items="${articles}">
                 <tr>
-                    <td><a href="${"/view?articleId=".concat(article.id)}">${article.title}</a></td>
+                    <c:url var="articleURL" value="/view">
+                        <c:param name="articleId" value="${article.id}"/>
+                    </c:url>
+                    <td><a href="${articleURL}">${article.title}</a></td>
                     <td>${article.author.name}</td>
                     <td>
                         <c:choose>
@@ -42,7 +46,7 @@
                                 -
                             </c:when>
                             <c:otherwise>
-                                <a href="${"/download?fileId=".concat(article.file.id)}">
+                                <a href="${pageContext.request.contextPath}/download?fileId=${article.file.id}">
                                     ${article.file.name}
                                 </a>
                             </c:otherwise>

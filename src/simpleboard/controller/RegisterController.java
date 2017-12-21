@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Redirecter;
 import simpleboard.dao.UserDAO;
 
 import javax.servlet.ServletException;
@@ -23,32 +24,32 @@ public class RegisterController extends HttpServlet {
 
         if (userId.equals("") || userName.equals("") || userPw.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
-            response.sendRedirect("/register");
+            Redirecter.refresh(request, response);
             return;
         }
 
         try {
             if (UserDAO.idExists(userId)) {
                 MessageFlasher.flash(request, "이미 존재하는 아이디입니다.", "error");
-                response.sendRedirect("/register");
+                Redirecter.refresh(request, response);
                 return;
             }
 
             UserDAO.register(userId, userName, userPw, role);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/register");
+            Redirecter.refresh(request, response);
             return;
         }
 
         MessageFlasher.flash(request, "회원가입이 완료되었습니다.", "success");
-        response.sendRedirect("/");
+        Redirecter.redirect("/", request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("user") != null) {
             MessageFlasher.flash(request, "이미 로그인 되어 있습니다.", "error");
-            response.sendRedirect("/");
+            Redirecter.redirect("/", request, response);
             return;
         }
         getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);

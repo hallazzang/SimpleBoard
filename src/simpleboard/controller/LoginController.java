@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Redirecter;
 import simpleboard.dao.UserDAO;
 import simpleboard.dto.UserDTO;
 
@@ -22,7 +23,7 @@ public class LoginController extends HttpServlet {
 
         if (userId.equals("") || userPw.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
-            response.sendRedirect("/login");
+            Redirecter.refresh(request, response);
             return;
         }
 
@@ -32,23 +33,23 @@ public class LoginController extends HttpServlet {
             user = UserDAO.getUser(userId);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/login");
+            Redirecter.refresh(request, response);
             return;
         }
 
         if (user != null && user.checkPw(userPw)) {
             request.getSession().setAttribute("user", user);
-            response.sendRedirect("/");
+            Redirecter.redirect("/", request, response);
         } else {
             MessageFlasher.flash(request, "아이디 혹은 비밀번호가 틀렸습니다.", "error");
-            response.sendRedirect("/login");
+            Redirecter.refresh(request, response);
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("user") != null) {
             MessageFlasher.flash(request, "이미 로그인 되어 있습니다.", "error");
-            response.sendRedirect("/");
+            Redirecter.redirect("/", request, response);
             return;
         }
         getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);

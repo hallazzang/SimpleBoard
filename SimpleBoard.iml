@@ -22,6 +22,6 @@
     <orderEntry type="library" exported="" scope="PROVIDED" name="jbcrypt" level="project" />
     <orderEntry type="library" name="javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="cos" level="project" />
-    <orderEntry type="library" name="commons-io-2.6" level="project" />
+    <orderEntry type="library" name="apache-httpclient" level="project" />
   </component>
 </module>

@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Redirecter;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dao.BoardDAO;
 import simpleboard.dto.ArticleDTO;
@@ -37,7 +38,7 @@ public class BoardController extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             MessageFlasher.flash(request, "존재하지 않는 페이지입니다.", "error");
-            response.sendRedirect("/board?boardId=" + boardId);
+            Redirecter.forcedRedirect("/board?boardId=" + boardId, request, response);
             return;
         }
 
@@ -51,7 +52,7 @@ public class BoardController extends HttpServlet {
             articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/");
+            Redirecter.forcedRedirect("/board", request, response);
             return;
         }
 

@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Redirecter;
 import simpleboard.dao.FileDAO;
 import simpleboard.dto.FileDTO;
 
@@ -33,7 +34,7 @@ public class FileDownloadHandler extends HttpServlet {
             file = FileDAO.getFile(fileId);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/board?boardId=".concat("test"));
+            Redirecter.forcedRedirect("/board", request, response);
             return;
         }
 

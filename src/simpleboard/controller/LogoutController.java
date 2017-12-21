@@ -1,5 +1,7 @@
 package simpleboard.controller;
 
+import simpleboard.common.Redirecter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,6 @@ import java.io.IOException;
 public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("user");
-        response.sendRedirect("/");
+        Redirecter.redirect("/login", request, response);
     }
 }

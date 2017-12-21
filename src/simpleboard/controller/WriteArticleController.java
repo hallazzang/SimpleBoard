@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Redirecter;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dao.BoardDAO;
 import simpleboard.dao.FileDAO;
@@ -23,7 +24,7 @@ public class WriteArticleController extends HttpServlet {
 
         if (user == null) {
             MessageFlasher.flash(request, "로그인이 필요합니다", "error");
-            response.sendRedirect("/login");
+            Redirecter.comeBy("/login", request, response);
             return;
         }
 
@@ -32,12 +33,12 @@ public class WriteArticleController extends HttpServlet {
         try {
             if (!BoardDAO.exists(boardId)) {
                 MessageFlasher.flash(request, "존재하지 않는 게시판입니다.", "error");
-                response.sendRedirect("/");
+                Redirecter.forcedRedirect("/board", request, response);
                 return;
             }
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/write?boardId=".concat(boardId));
+            Redirecter.refresh(request, response);
             return;
         }
 
@@ -47,13 +48,13 @@ public class WriteArticleController extends HttpServlet {
             req = FileDAO.processMultipartRequest(request);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/write?boardId=".concat(boardId));
+            Redirecter.refresh(request, response);
             return;
         }
 
         if (req == null) {
             MessageFlasher.flash(request, "잘못된 요청입니다.", "error");
-            response.sendRedirect("/write?boardId=".concat(boardId));
+            Redirecter.refresh(request, response);
             return;
         }
 
@@ -63,7 +64,7 @@ public class WriteArticleController extends HttpServlet {
 
         if (articleTitle.equals("") || articleContent.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
-            response.sendRedirect("/write?boardId=".concat(boardId));
+            Redirecter.refresh(request, response);
             return;
         }
 
@@ -71,17 +72,17 @@ public class WriteArticleController extends HttpServlet {
             ArticleDAO.putArticle(boardId, articleTitle, articleContent, user.getId(), fileId);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
-            response.sendRedirect("/write?boardId=".concat(boardId));
+            Redirecter.refresh(request, response);
             return;
         }
 
-        response.sendRedirect("/board?boardId=" + boardId);
+        Redirecter.redirect("/board?boardId=" + boardId, request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getSession().getAttribute("user") == null) {
             MessageFlasher.flash(request, "로그인이 필요합니다.", "error");
-            response.sendRedirect("/login");
+            Redirecter.comeBy("/login", request, response);
             return;
         }
         getServletContext().getRequestDispatcher("/WEB-INF/writeArticle.jsp").forward(request, response);
