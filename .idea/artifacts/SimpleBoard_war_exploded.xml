@@ -10,6 +10,7 @@
           <element id="library" level="project" name="mysql-connector-java-5.1.45-bin" />
           <element id="library" level="project" name="jbcrypt" />
           <element id="library" level="project" name="javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="cos" />
         </element>
         <element id="dir-copy" path="$PROJECT_DIR$/web" />
         <element id="javaee-facet-resources" facet="SimpleBoard/web/Web" />

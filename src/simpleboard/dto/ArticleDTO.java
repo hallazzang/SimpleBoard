@@ -4,27 +4,32 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class ArticleDTO implements Serializable {
-    private int id;
+    private Integer id;
     private String title;
     private String content;
     private UserDTO author;
     private Timestamp modifiedAt;
     private String boardId;
+    private FileDTO file;
 
-    public ArticleDTO(int id, String title, String content, UserDTO author, Timestamp modifiedAt, String boardId) {
+    public ArticleDTO() { super(); }
+
+    public ArticleDTO(Integer id, String title, String content, UserDTO author, Timestamp modifiedAt, String boardId, FileDTO file) {
+        super();
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.modifiedAt = modifiedAt;
         this.boardId = boardId;
+        this.file = file;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -66,5 +71,13 @@ public class ArticleDTO implements Serializable {
 
     public void setBoardId(String boardId) {
         this.boardId = boardId;
+    }
+
+    public FileDTO getFile() {
+        return file;
+    }
+
+    public void setFile(FileDTO file) {
+        this.file = file;
     }
 }

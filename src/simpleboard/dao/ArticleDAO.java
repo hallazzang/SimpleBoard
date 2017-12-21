@@ -2,6 +2,7 @@ package simpleboard.dao;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.dto.ArticleDTO;
+import simpleboard.dto.FileDTO;
 import simpleboard.dto.UserDTO;
 
 import java.sql.Connection;
@@ -10,14 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAO extends BaseDAO {
-    private ArticleDAO() { }
+    private ArticleDAO() {
+    }
 
     public enum SortType {
         ASCENDING,
         DESCENDING,
-    };
+    }
 
-    public static void putArticle(String boardId, String title, String content, String authorId) throws DatabaseException {
+    public static void putArticle(String boardId, String title, String content, String authorId, Integer fileId)
+            throws DatabaseException {
         Connection conn = getConnection();
 
         if (conn == null) {
@@ -25,13 +28,15 @@ public class ArticleDAO extends BaseDAO {
         }
 
         try {
-            st = conn.prepareStatement("INSERT INTO articles (boardId, title, content, authorId)" +
-                                            "VALUES (?, ?, ?, ?);");
+            st = conn.prepareStatement(
+                    "INSERT INTO articles " +
+                    "(boardId, title, content, authorId, fileId) VALUES (?, ?, ?, ?, ?);");
             st.setString(1, boardId);
             st.setString(2, title);
             st.setString(3, content);
             st.setString(4, authorId);
-            st.execute();
+            st.setObject(5, fileId);
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());
         } finally {
@@ -49,19 +54,23 @@ public class ArticleDAO extends BaseDAO {
         ArticleDTO result = null;
 
         try {
-            st = conn.prepareStatement("SELECT articles.title, articles.content, " +
-                    "users.id, users.name, users.role, articles.modifiedAt, articles.boardId " +
-                    "FROM articles INNER JOIN users ON articles.id = ?;");
+            st = conn.prepareStatement(
+                    "SELECT * " +
+                    "FROM articles AS a " +
+                    "INNER JOIN users AS u ON a.id = ? " +
+                    "LEFT JOIN files AS f ON a.fileId = f.id;");
             st.setInt(1, articleId);
             rs = st.executeQuery();
             if (rs.next()) {
-                UserDTO author = new UserDTO();
-                author.setId(rs.getString(3));
-                author.setName(rs.getString(4));
-                author.setRole(rs.getString(5));
+                UserDTO author = new UserDTO(rs.getString("u.id"), rs.getString("u.name"), null, rs.getString("u.role"));
 
-                result = new ArticleDTO(articleId, rs.getString(1), rs.getString(2),
-                        author, rs.getTimestamp(6), rs.getString(7)
+                FileDTO file = null;
+                if (rs.getInt("f.id") != 0) {
+                    file = new FileDTO(rs.getInt("f.id"), rs.getString("f.name"), rs.getString("f.path"));
+                }
+
+                result = new ArticleDTO(rs.getInt("a.id"), rs.getString("a.title"), rs.getString("a.content"),
+                        author, rs.getTimestamp("a.modifiedAt"), rs.getString("a.boardId"), file
                 );
             }
         } catch (SQLException e) {
@@ -83,11 +92,12 @@ public class ArticleDAO extends BaseDAO {
         List<ArticleDTO> result;
 
         try {
-            st = conn.prepareStatement("SELECT articles.id, articles.title, articles.content, " +
-                    "users.id, users.name, users.role, articles.modifiedAt, articles.boardId " +
-                    "FROM articles INNER JOIN users ON articles.boardId = ? AND articles.authorId = users.id " +
-                    "ORDER BY articles.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") +
-                    " LIMIT ?, 15;"
+            st = conn.prepareStatement(
+                    "SELECT * " +
+                    "FROM articles AS a " +
+                    "INNER JOIN users AS u ON a.boardId = ? AND a.authorId = u.id " +
+                    "LEFT JOIN files AS f ON a.fileId = f.id " +
+                    "ORDER BY a.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") + " LIMIT ?, 15;"
             );
             st.setString(1, boardId);
             st.setInt(2, (page - 1) * 15);
@@ -95,14 +105,16 @@ public class ArticleDAO extends BaseDAO {
 
             result = new ArrayList<>();
             while (rs.next()) {
-                UserDTO author = new UserDTO();
-                author.setId(rs.getString(4));
-                author.setName(rs.getString(5));
-                author.setRole(rs.getString(6));
+                UserDTO author = new UserDTO(rs.getString("u.id"), rs.getString("u.name"), null, rs.getString("u.role"));
+
+                FileDTO file = null;
+                if (rs.getInt("f.id") != 0) {
+                    file = new FileDTO(rs.getInt("f.id"), rs.getString("f.name"), rs.getString("f.path"));
+                }
 
                 ArticleDTO article = new ArticleDTO(
-                        rs.getInt(1), rs.getString(2), rs.getString(3),
-                        author, rs.getTimestamp(7), rs.getString(8)
+                        rs.getInt("a.id"), rs.getString("a.title"), rs.getString("a.content"),
+                        author, rs.getTimestamp("a.modifiedAt"), rs.getString("a.boardId"), file
                 );
 
                 result.add(article);

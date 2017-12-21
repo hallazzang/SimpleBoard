@@ -17,6 +17,7 @@
             <tr>
                 <th>제목</th>
                 <th>작성자</th>
+                <th>첨부파일</th>
                 <th>수정 일시</th>
             </tr>
         </thead>
@@ -25,6 +26,16 @@
                 <tr>
                     <td><a href="${"/view?articleId=".concat(article.id)}">${article.title}</a></td>
                     <td>${article.author.name}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${article.file == null}">
+                                -
+                            </c:when>
+                            <c:otherwise>
+                                ${article.file.name}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                     <td><fmt:formatDate value="${article.modifiedAt}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
                 </tr>
             </c:forEach>

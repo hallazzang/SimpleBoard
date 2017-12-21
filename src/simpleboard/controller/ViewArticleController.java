@@ -19,7 +19,7 @@ public class ViewArticleController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArticleDTO article = null;
+        ArticleDTO article;
         int articleId;
 
         try {

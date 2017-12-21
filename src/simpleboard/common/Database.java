@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class Database {
     private static Connection conn = null;
 
-    private final static String url = "jdbc:mysql://mysql:3306/simpleboard?autoReconnect=true&useSSL=false";
-    private final static String user = "simpleboard";
-    private final static String password = "simpleboard";
+    private static final String url = "jdbc:mysql://mysql:3306/simpleboard?autoReconnect=true&useSSL=false";
+    private static final String user = "simpleboard";
+    private static final String password = "simpleboard";
 
     private Database() { }
 
