@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAO extends BaseDAO {
-    private static final int pageSize = 5;
+    private static final int pageSize = 3;
 
     private ArticleDAO() {
     }
@@ -129,7 +129,30 @@ public class ArticleDAO extends BaseDAO {
         }
 
         return result;
+    }
 
+    public static int getArticleCount(String boardId) throws DatabaseException {
+        Connection conn = getConnection();
+
+        if (conn == null) {
+            throw new DatabaseException("Cannot connect to database");
+        }
+
+        int result;
+
+        try {
+            st = conn.prepareStatement("SELECT COUNT(*) FROM articles WHERE boardId = ?;");
+            st.setString(1, boardId);
+            rs = st.executeQuery();
+            rs.next();
+            result = rs.getInt(1);
+        } catch (SQLException e) {
+            throw new DatabaseException(e.getMessage());
+        } finally {
+            cleanup();
+        }
+
+        return result;
     }
 
     public enum SortType {

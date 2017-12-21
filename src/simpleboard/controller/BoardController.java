@@ -2,6 +2,7 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
+import simpleboard.common.Paginator;
 import simpleboard.common.Redirecter;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dao.BoardDAO;
@@ -20,7 +21,7 @@ import java.util.List;
 public class BoardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String boardId = request.getParameter("boardId");
-        int page;
+        int page, totalCount;
         List<ArticleDTO> articles;
         List<BoardDTO> boards;
 
@@ -54,14 +55,17 @@ public class BoardController extends HttpServlet {
                 Redirecter.forcedRedirect("/board?boardId=" + boardId, request, response);
                 return;
             }
+            totalCount = ArticleDAO.getArticleCount(boardId);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
             Redirecter.forcedRedirect("/board", request, response);
             return;
         }
 
+        Paginator paginator = new Paginator(boardId, page, totalCount, 3, 3);
+
         request.setAttribute("boardId", boardId);
-        request.setAttribute("page", page);
+        request.setAttribute("paginator", paginator);
         request.setAttribute("boards", boards);
         request.setAttribute("articles", articles);
         getServletContext().getRequestDispatcher("/WEB-INF/board.jsp").forward(request, response);

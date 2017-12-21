@@ -1,4 +1,5 @@
 <%@ page import="simpleboard.common.MessageFlasher" %>
+<%@ page import="simpleboard.common.Paginator" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -8,7 +9,6 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/normalize.css">
   <style>
-
   </style>
   <title>게시판</title>
 </head>
@@ -58,5 +58,7 @@
   </c:forEach>
   </tbody>
 </table>
+<%-- <% ((Paginator)request.getAttribute("paginator")).render(response.getWriter()); %> --%>
+${paginator.render()}
 </body>
 </html>
