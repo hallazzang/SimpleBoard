@@ -4,7 +4,6 @@ import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dto.UserDTO;
-import sun.plugin2.message.Message;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +36,7 @@ public class WriteArticleController extends HttpServlet {
         }
 
         try {
-            ArticleDAO.put("test", articleTitle, articleContent, user.getId());
+            ArticleDAO.putArticle("test", articleTitle, articleContent, user.getId());
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
             response.sendRedirect("/write");

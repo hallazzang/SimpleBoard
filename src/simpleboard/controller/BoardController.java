@@ -49,7 +49,7 @@ public class BoardController extends HttpServlet {
                 return;
             }
 
-            articles = ArticleDAO.get(boardId, page, ArticleDAO.SortType.DESCENDING);
+            articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
             response.sendRedirect("/");

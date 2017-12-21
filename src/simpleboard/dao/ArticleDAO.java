@@ -17,7 +17,7 @@ public class ArticleDAO extends BaseDAO {
         DESCENDING,
     };
 
-    public static void put(String boardId, String title, String content, String authorId) throws DatabaseException {
+    public static void putArticle(String boardId, String title, String content, String authorId) throws DatabaseException {
         Connection conn = getConnection();
 
         if (conn == null) {
@@ -40,7 +40,7 @@ public class ArticleDAO extends BaseDAO {
         }
     }
 
-    public static List<ArticleDTO> get(String boardId, int page, SortType sortType) throws DatabaseException {
+    public static List<ArticleDTO> getArticles(String boardId, int page, SortType sortType) throws DatabaseException {
         Connection conn = getConnection();
 
         if (conn == null) {
