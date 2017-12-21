@@ -23,7 +23,7 @@
         <tbody>
             <c:forEach var="article" items="${articles}">
                 <tr>
-                    <td>${article.title}</td>
+                    <td><a href="${"/view?articleId=".concat(article.id)}">${article.title}</a></td>
                     <td>${article.author.name}</td>
                     <td><fmt:formatDate value="${article.modifiedAt}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
                 </tr>

@@ -22,7 +22,6 @@ public class UserDAO extends BaseDAO {
         try {
             st = conn.prepareStatement("SELECT name, pwHash, role FROM users WHERE id = ?");
             st.setString(1, userId);
-
             rs = st.executeQuery();
             if (rs.next()) {
                 String userName = rs.getString(1);
@@ -57,7 +56,6 @@ public class UserDAO extends BaseDAO {
             st.setString(2, userName);
             st.setString(3, BCrypt.hashpw(userPw, BCrypt.gensalt()));
             st.setString(4, role);
-
             st.execute();
         } catch (SQLException e) {
             throw new DatabaseException(e.getMessage());

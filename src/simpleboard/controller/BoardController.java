@@ -21,7 +21,7 @@ public class BoardController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String boardId = request.getParameter("id");
+        String boardId = request.getParameter("boardId");
         int page;
         List<ArticleDTO> articles;
 
@@ -39,7 +39,7 @@ public class BoardController extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             MessageFlasher.flash(request, "존재하지 않는 페이지입니다.", "error");
-            response.sendRedirect("/board?id=" + boardId);
+            response.sendRedirect("/board?boardId=" + boardId);
             return;
         }
 

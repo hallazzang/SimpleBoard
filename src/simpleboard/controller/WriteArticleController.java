@@ -43,7 +43,7 @@ public class WriteArticleController extends HttpServlet {
             return;
         }
 
-        response.sendRedirect("/board?id=" + boardId);
+        response.sendRedirect("/board?boardId=" + boardId);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

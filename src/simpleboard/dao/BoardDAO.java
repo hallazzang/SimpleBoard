@@ -19,7 +19,6 @@ public class BoardDAO extends BaseDAO {
         try {
             st = conn.prepareStatement("SELECT * FROM boards WHERE id = ?;");
             st.setString(1, boardId);
-
             rs = st.executeQuery();
             result = rs.next();
         } catch (SQLException e) {
