@@ -16,7 +16,7 @@
   </div>
   <div class="form-group">
     <label for="articleContent">내용</label>
-    <input type="text" class="form-control" name="articleContent" id="articleContent" placeholder="내용" required>
+    <textarea class="form-control" name="articleContent" id="articleContent" placeholder="내용" required></textarea>
   </div>
   <div class="form-group">
     <label for="file">첨부파일</label>
