@@ -4,24 +4,24 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title></title>
+  <meta charset="utf-8">
+  <title></title>
 </head>
 <body>
 <% MessageFlasher.renderFlashedMessage(request, response); %>
 <table>
-    <tbody>
-    <tr>
-        <th>제목</th>
-        <td colspan="3">${article.title}</td>
-    </tr>
-    <tr>
-        <th>작성자</th>
-        <td>${article.author.name}</td>
-        <th>작성 일시</th>
-        <td><fmt:formatDate value="${article.modifiedAt}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
-    </tr>
-    </tbody>
+  <tbody>
+  <tr>
+    <th>제목</th>
+    <td colspan="3">${article.title}</td>
+  </tr>
+  <tr>
+    <th>작성자</th>
+    <td>${article.author.name}</td>
+    <th>작성 일시</th>
+    <td><fmt:formatDate value="${article.modifiedAt}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
+  </tr>
+  </tbody>
 </table>
 </body>
 </html>
