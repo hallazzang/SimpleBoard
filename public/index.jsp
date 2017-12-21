@@ -14,7 +14,7 @@
         if (user != null) {
             out.println("<p>반갑습니다, " + user.getName() + "님!</p>");
         } else { %>
-            <a href="/login.jsp">로그인</a>해주세요.
+            <a href="/login.do">로그인</a>해주세요.
         <% }
     %>
 </body>

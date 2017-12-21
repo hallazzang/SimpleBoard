@@ -14,36 +14,42 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/login.do"})
 public class LoginController extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
 
-        String userId = request.getParameter("userId");
-        String userPw = request.getParameter("userPw");
+        String userId = req.getParameter("userId");
+        String userPw = req.getParameter("userPw");
 
         if (userId == "" || userPw == "") {
-            MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
-            response.sendRedirect("/login.jsp");
+            MessageFlasher.flash(req, "입력 필드가 비어 있습니다.", "error");
+            resp.sendRedirect("/login.do");
             return;
         }
 
         UserDTO user;
 
         try {
-            user = UserDAO.getInstance().getUser(userId);
+            user = UserDAO.getUser(userId);
         } catch (DatabaseException e) {
-            MessageFlasher.flash(request, e.getMessage(), "error");
-            response.sendRedirect("/login.jsp");
+            MessageFlasher.flash(req, e.getMessage(), "error");
+            resp.sendRedirect("/login.do");
             return;
         }
 
         if (user != null && user.checkPw(userPw)) {
-            request.getSession().setAttribute("user", user);
-            response.sendRedirect("/index.jsp");
+            req.getSession().setAttribute("user", user);
+            resp.sendRedirect("/index.jsp");
             return;
         } else {
-            MessageFlasher.flash(request, "아이디 혹은 비밀번호가 틀렸습니다.", "error");
-            response.sendRedirect("/login.jsp");
+            MessageFlasher.flash(req, "아이디 혹은 비밀번호가 틀렸습니다.", "error");
+            resp.sendRedirect("/login.do");
             return;
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
     }
 }

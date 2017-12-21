@@ -7,6 +7,13 @@
     <title>회원가입</title>
 </head>
 <body>
+    <%
+        if (request.getSession().getAttribute("user") != null) {
+            MessageFlasher.flash(request, "이미 로그인 되어 있습니다.", "error");
+            response.sendRedirect("/index.jsp");
+            return;
+        }
+    %>
     <% MessageFlasher.renderFlashedMessage(request, response); %>
     <h2>회원가입</h2>
     <form action="register.do" method="post">
