@@ -6,12 +6,22 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <style>
+
+    </style>
     <title>게시판</title>
 </head>
 <body>
     <% MessageFlasher.renderFlashedMessage(request, response); %>
     <h2>게시판</h2>
     <a href="${"/write?boardId=".concat(boardId)}">글 쓰기</a>
+    <h4>게시판 목록</h4>
+    <ul>
+        <c:forEach var="board" items="${boards}">
+            <li>${board.name}</li>
+        </c:forEach>
+    </ul>
+    <h4>글 목록</h4>
     <table>
         <thead>
             <tr>

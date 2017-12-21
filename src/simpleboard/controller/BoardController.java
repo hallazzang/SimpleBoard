@@ -5,6 +5,7 @@ import simpleboard.common.MessageFlasher;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dao.BoardDAO;
 import simpleboard.dto.ArticleDTO;
+import simpleboard.dto.BoardDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class BoardController extends HttpServlet {
         String boardId = request.getParameter("boardId");
         int page;
         List<ArticleDTO> articles;
+        List<BoardDTO> boards;
 
         try {
             String pageString = request.getParameter("page");
@@ -45,6 +47,7 @@ public class BoardController extends HttpServlet {
                 return;
             }
 
+            boards = BoardDAO.getBoards();
             articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
@@ -54,6 +57,7 @@ public class BoardController extends HttpServlet {
 
         request.setAttribute("boardId", boardId);
         request.setAttribute("page", page);
+        request.setAttribute("boards", boards);
         request.setAttribute("articles", articles);
         getServletContext().getRequestDispatcher("/WEB-INF/board.jsp").forward(request, response);
     }
