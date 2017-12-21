@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "BoardController", urlPatterns = {"/board"})
@@ -43,12 +44,22 @@ public class BoardController extends HttpServlet {
         }
 
         try {
-            if (!BoardDAO.exists(boardId)) {
+            boards = BoardDAO.getBoards();
+
+            if (boards == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
-            boards = BoardDAO.getBoards();
+            if (boardId == null || boardId.equals("")) {
+                Redirecter.forcedRedirect("/board?boardId=" + boards.get(0).getId(), request, response);
+                return;
+            }
+
+            if (!BoardDAO.exists(boardId)) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
             articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
             if (articles == null && page > 0) {
                 MessageFlasher.flash(request, "존재하지 않는 페이지입니다.", "error");
