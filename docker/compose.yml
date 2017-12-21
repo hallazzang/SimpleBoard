@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  webapp:
+    image: hallazzang/simpleboard:webapp
+    restart: always
+    ports:
+      - 8888:8080
+    networks:
+      - webnet
+    depends_on:
+      - mysql
+
+  mysql:
+    image: hallazzang/simpleboard:mysql
+    restart: always
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - webnet
+
+networks:
+  webnet:
+
