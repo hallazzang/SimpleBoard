@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAO extends BaseDAO {
+    private static final int pageSize = 5;
+
     private ArticleDAO() {
     }
 
@@ -92,10 +94,11 @@ public class ArticleDAO extends BaseDAO {
                             "FROM articles AS a " +
                             "INNER JOIN users AS u ON a.boardId = ? AND a.authorId = u.id " +
                             "LEFT JOIN files AS f ON a.fileId = f.id " +
-                            "ORDER BY a.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") + " LIMIT ?, 15;"
+                            "ORDER BY a.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") + " LIMIT ?, ?;"
             );
             st.setString(1, boardId);
-            st.setInt(2, (page - 1) * 15);
+            st.setInt(2, (page - 1) * pageSize);
+            st.setInt(3, pageSize);
             rs = st.executeQuery();
 
             if (!rs.next()) {
