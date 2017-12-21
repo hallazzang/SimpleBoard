@@ -4,7 +4,9 @@ import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
 import simpleboard.common.Redirecter;
 import simpleboard.dao.ArticleDAO;
+import simpleboard.dao.BoardDAO;
 import simpleboard.dto.ArticleDTO;
+import simpleboard.dto.BoardDTO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ViewArticleController", urlPatterns = "/view")
 public class ViewArticleController extends HttpServlet {
@@ -20,6 +23,7 @@ public class ViewArticleController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<BoardDTO> boards;
         ArticleDTO article;
         int articleId;
 
@@ -33,6 +37,13 @@ public class ViewArticleController extends HttpServlet {
         }
 
         try {
+            boards = BoardDAO.getBoards();
+
+            if (boards == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
             article = ArticleDAO.getArticle(articleId);
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
@@ -45,6 +56,7 @@ public class ViewArticleController extends HttpServlet {
             return;
         }
 
+        request.setAttribute("boards", boards);
         request.setAttribute("article", article);
         getServletContext().getRequestDispatcher("/WEB-INF/viewArticle.jsp").forward(request, response);
     }

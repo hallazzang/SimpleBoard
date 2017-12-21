@@ -21,7 +21,7 @@ public class LoginController extends HttpServlet {
         String userId = request.getParameter("userId");
         String userPw = request.getParameter("userPw");
 
-        if (userId.equals("") || userPw.equals("")) {
+        if (userId == null || userId.equals("") || userPw == null || userPw.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
             Redirecter.refresh(request, response);
             return;

@@ -17,14 +17,37 @@ public class MessageFlasher {
         return flashedMessage;
     }
 
-    public static void renderFlashedMessage(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            FlashedMessage flashedMessage = getFlashedMessage(request);
+    public static String renderFlashedMessage(HttpServletRequest request) {
+        String result = "";
 
-            if (flashedMessage != null) {
-                response.getWriter().println("<p>" + flashedMessage.getMessage() + "</p>");
+        FlashedMessage flashedMessage = getFlashedMessage(request);
+
+        if (flashedMessage != null) {
+            String color;
+
+            switch (flashedMessage.getCategory()) {
+                case "success":
+                    color = "success";
+                    break;
+                case "error":
+                    color = "warning";
+                    break;
+                case "exception":
+                    color = "danger";
+                    break;
+                case "info":
+                    color = "info";
+                    break;
+                default:
+                    color = "primary";
             }
-        } catch (IOException e) {
+            result += "<div class=\"alert alert-" + color + " alert-dismissable fade show\" role=\"alert\">";
+            result += flashedMessage.getMessage();
+            result += "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                    "    <span aria-hidden=\"true\">&times;</span>\n" +
+                    "  </button></div>";
         }
+
+        return result;
     }
 }

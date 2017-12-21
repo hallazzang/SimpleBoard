@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleDAO extends BaseDAO {
-    private static final int pageSize = 3;
+    private static final int pageSize = 10;
 
     private ArticleDAO() {
     }
@@ -54,7 +54,7 @@ public class ArticleDAO extends BaseDAO {
             st = conn.prepareStatement(
                     "SELECT * " +
                             "FROM articles AS a " +
-                            "INNER JOIN users AS u ON a.id = ? " +
+                            "INNER JOIN users AS u ON a.id = ? AND u.id = a.authorId " +
                             "LEFT JOIN files AS f ON a.fileId = f.id;");
             st.setInt(1, articleId);
             rs = st.executeQuery();

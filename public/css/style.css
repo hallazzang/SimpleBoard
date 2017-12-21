@@ -1,0 +1,159 @@
+.navigation-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  /*height: 70px;*/
+  background-color: #bbb;
+  box-shadow: 0px 3px 7px #777;
+  overflow: hidden;
+}
+
+.navigation-bar .logo {
+  width: 50px;
+  height: 50px;
+  float: left;
+  text-align: center;
+  line-height: 50px;
+  background-color:#666;
+  margin-right: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.navigation-bar .links ul {
+  overflow: hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+.navigation-bar .links li {
+  float: left;
+}
+
+.navigation-bar .links li:hover {
+  background-color: #999;
+}
+
+.navigation-bar .links li > a {
+  display: block;
+  text-decoration: none;
+  padding: 16px;
+  text-align: center;
+  color: black;
+}
+
+.navigation-bar .user-menu {
+  float: right;
+}
+
+.navigation-bar .user-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 16px;
+  text-align: center;
+  color: black;
+}
+
+.navigation-bar .user-menu a:hover {
+  background-color: #999;
+}
+
+body {
+  padding-top: 70px;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  overflow: hidden;
+}
+
+aside.sidebar {
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 20%;
+  float: left;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.board-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.board-list li {
+  background-color: #eee;
+  margin: 10px;
+  /*border: 1px solid lightgray;*/
+}
+
+.board-list li > a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  line-height: 100%;
+}
+
+.board-list li:hover {
+  background-color: #dedede;
+}
+
+section.content {
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*width: 100%;*/
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.flash-message {
+  border: 1px solid;
+  padding: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.flash-message.success {
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.flash-message.error {
+  background-color: lightyellow;
+  border-color: yellow;
+}
+
+.flash-message.exception {
+  background-color: indianred;
+  border-color: red;
+  font-family: 'Courier New', consolas, monospace;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #ccc;
+  padding: 5px;
+}

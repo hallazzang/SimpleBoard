@@ -22,7 +22,7 @@ public class RegisterController extends HttpServlet {
         String userPw = request.getParameter("userPw");
         String role = "user";
 
-        if (userId.equals("") || userName.equals("") || userPw.equals("")) {
+        if (userId == null || userId.equals("") || userName == null || userName.equals("") || userPw == null || userPw.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
             Redirecter.refresh(request, response);
             return;

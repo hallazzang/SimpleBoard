@@ -1,18 +1,29 @@
-<%@ page import="simpleboard.common.MessageFlasher" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title></title>
+  <jsp:include page="common/head.jsp"/>
+  <title>게시글 작성</title>
 </head>
 <body>
-<% MessageFlasher.renderFlashedMessage(request, response); %>
+<jsp:include page="common/layoutTop.jsp"/>
 <form method="post" enctype="multipart/form-data">
-  <input type="text" name="articleTitle" placeholder="제목" required><br>
-  <textarea name="articleContent" placeholder="내용" required></textarea><br>
-  <input type="file" name="file">
-  <input type="submit" value="작성">
+  <div class="form-group">
+    <label for="articleTitle">제목</label>
+    <input type="text" class="form-control" name="articleTitle" id="articleTitle" placeholder="제목" required>
+  </div>
+  <div class="form-group">
+    <label for="articleContent">내용</label>
+    <input type="text" class="form-control" name="articleContent" id="articleContent" placeholder="내용" required>
+  </div>
+  <div class="form-group">
+    <label for="file">첨부파일</label>
+    <input type="file" class="form-control-file" name="file" id="file">
+  </div>
+  <button class="btn btn-primary" type="submit">작성하기</button>
 </form>
+<jsp:include page="common/layoutBottom.jsp"/>
 </body>
 </html>

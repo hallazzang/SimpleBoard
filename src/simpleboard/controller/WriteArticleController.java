@@ -62,7 +62,7 @@ public class WriteArticleController extends HttpServlet {
         String articleContent = req.getReq().getParameter("articleContent");
         Integer fileId = req.getFile() != null ? req.getFile().getId() : null;
 
-        if (articleTitle.equals("") || articleContent.equals("")) {
+        if (articleTitle == null || articleTitle.equals("") || articleContent == null || articleContent.equals("")) {
             MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
             Redirecter.refresh(request, response);
             return;

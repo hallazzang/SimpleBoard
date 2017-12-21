@@ -2,7 +2,6 @@ package simpleboard.controller;
 
 import simpleboard.common.DatabaseException;
 import simpleboard.common.MessageFlasher;
-import simpleboard.common.Paginator;
 import simpleboard.common.Redirecter;
 import simpleboard.dao.ArticleDAO;
 import simpleboard.dao.BoardDAO;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "BoardController", urlPatterns = {"/board"})
@@ -61,7 +59,7 @@ public class BoardController extends HttpServlet {
                 return;
             }
             articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
-            if (articles == null && page > 0) {
+            if (articles == null && page > 1) {
                 MessageFlasher.flash(request, "존재하지 않는 페이지입니다.", "error");
                 Redirecter.forcedRedirect("/board?boardId=" + boardId, request, response);
                 return;
@@ -73,12 +71,13 @@ public class BoardController extends HttpServlet {
             return;
         }
 
-        Paginator paginator = new Paginator(boardId, page, totalCount, 3, 3);
-
         request.setAttribute("boardId", boardId);
-        request.setAttribute("paginator", paginator);
         request.setAttribute("boards", boards);
         request.setAttribute("articles", articles);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalCount", totalCount);
+        request.setAttribute("itemsPerPage", 10);
+        request.setAttribute("pageNavCount", 5);
         getServletContext().getRequestDispatcher("/WEB-INF/board.jsp").forward(request, response);
     }
 }

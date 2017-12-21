@@ -45,7 +45,7 @@ public class BoardDAO extends BaseDAO {
         List<BoardDTO> result;
 
         try {
-            st = conn.prepareStatement("SELECT * FROM boards;");
+            st = conn.prepareStatement("SELECT * FROM boards ORDER BY createdAt ASC;");
             rs = st.executeQuery();
             if (!rs.next()) {
                 return null;
