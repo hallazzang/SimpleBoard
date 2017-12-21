@@ -18,7 +18,14 @@ import java.io.IOException;
 
 @WebServlet(name = "FileDownloadController", urlPatterns = "/download")
 public class FileDownloadController extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String password = request.getParameter("password");
+
+        if (password == null || !password.equals("2101")) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
         int fileId;
 
         try {
@@ -61,5 +68,19 @@ public class FileDownloadController extends HttpServlet {
         outputStream.flush();
         outputStream.close();
         inputStream.close();
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int fileId;
+
+        try {
+            fileId = Integer.parseInt(request.getParameter("fileId"));
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        request.setAttribute("fileId", fileId);
+        getServletContext().getRequestDispatcher("/WEB-INF/download.jsp").forward(request, response);
     }
 }
