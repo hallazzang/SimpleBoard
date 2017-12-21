@@ -15,7 +15,7 @@
 <body>
 <% MessageFlasher.renderFlashedMessage(request, response); %>
 <h2>게시판</h2>
-<a href="${"/write?boardId=".concat(boardId)}">글 쓰기</a>
+<a href="<c:url value="/write?boardId=${boardId}"/>">글 쓰기</a>
 <h4>게시판 목록</h4>
 <ul>
   <c:forEach var="board" items="${boards}">
@@ -36,7 +36,7 @@
   <c:forEach var="article" items="${articles}">
     <tr>
       <td>
-        <a href="<c:url value="${pageContext.request.contextPath}/view?articleId=${article.id}"/>">
+        <a href="<c:url value="/view?articleId=${article.id}"/>">
             ${article.title}
         </a>
       </td>
@@ -47,8 +47,8 @@
             -
           </c:when>
           <c:otherwise>
-            <a href="${pageContext.request.contextPath}/download?fileId=${article.file.id}">
-                ${article.file.name}
+            <a href="<c:url value="/download?fileId=${article.file.id}"/>">
+              다운로드
             </a>
           </c:otherwise>
         </c:choose>

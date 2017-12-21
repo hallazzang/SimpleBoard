@@ -16,8 +16,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@WebServlet(name = "FileDownloadHandler", urlPatterns = "/download")
-public class FileDownloadHandler extends HttpServlet {
+@WebServlet(name = "FileDownloadController", urlPatterns = "/download")
+public class FileDownloadController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int fileId;
 
