@@ -14,11 +14,6 @@ public class ArticleDAO extends BaseDAO {
     private ArticleDAO() {
     }
 
-    public enum SortType {
-        ASCENDING,
-        DESCENDING,
-    }
-
     public static void putArticle(String boardId, String title, String content, String authorId, Integer fileId)
             throws DatabaseException {
         Connection conn = getConnection();
@@ -30,7 +25,7 @@ public class ArticleDAO extends BaseDAO {
         try {
             st = conn.prepareStatement(
                     "INSERT INTO articles " +
-                    "(boardId, title, content, authorId, fileId) VALUES (?, ?, ?, ?, ?);");
+                            "(boardId, title, content, authorId, fileId) VALUES (?, ?, ?, ?, ?);");
             st.setString(1, boardId);
             st.setString(2, title);
             st.setString(3, content);
@@ -56,9 +51,9 @@ public class ArticleDAO extends BaseDAO {
         try {
             st = conn.prepareStatement(
                     "SELECT * " +
-                    "FROM articles AS a " +
-                    "INNER JOIN users AS u ON a.id = ? " +
-                    "LEFT JOIN files AS f ON a.fileId = f.id;");
+                            "FROM articles AS a " +
+                            "INNER JOIN users AS u ON a.id = ? " +
+                            "LEFT JOIN files AS f ON a.fileId = f.id;");
             st.setInt(1, articleId);
             rs = st.executeQuery();
             if (rs.next()) {
@@ -94,10 +89,10 @@ public class ArticleDAO extends BaseDAO {
         try {
             st = conn.prepareStatement(
                     "SELECT * " +
-                    "FROM articles AS a " +
-                    "INNER JOIN users AS u ON a.boardId = ? AND a.authorId = u.id " +
-                    "LEFT JOIN files AS f ON a.fileId = f.id " +
-                    "ORDER BY a.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") + " LIMIT ?, 15;"
+                            "FROM articles AS a " +
+                            "INNER JOIN users AS u ON a.boardId = ? AND a.authorId = u.id " +
+                            "LEFT JOIN files AS f ON a.fileId = f.id " +
+                            "ORDER BY a.id " + (sortType.equals(SortType.ASCENDING) ? "ASC" : "DESC") + " LIMIT ?, 15;"
             );
             st.setString(1, boardId);
             st.setInt(2, (page - 1) * 15);
@@ -132,5 +127,10 @@ public class ArticleDAO extends BaseDAO {
 
         return result;
 
+    }
+
+    public enum SortType {
+        ASCENDING,
+        DESCENDING,
     }
 }

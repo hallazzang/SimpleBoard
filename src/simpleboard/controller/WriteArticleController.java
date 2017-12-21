@@ -20,7 +20,7 @@ public class WriteArticleController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
 
-        UserDTO user = (UserDTO)request.getSession().getAttribute("user");
+        UserDTO user = (UserDTO) request.getSession().getAttribute("user");
 
         if (user == null) {
             MessageFlasher.flash(request, "로그인이 필요합니다", "error");

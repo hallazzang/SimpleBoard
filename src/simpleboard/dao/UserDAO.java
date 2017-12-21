@@ -8,7 +8,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class UserDAO extends BaseDAO {
-    private UserDAO() { }
+    private UserDAO() {
+    }
 
     public static UserDTO getUser(String userId) throws DatabaseException {
         Connection conn = getConnection();

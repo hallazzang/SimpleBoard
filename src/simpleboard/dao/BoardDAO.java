@@ -1,6 +1,5 @@
 package simpleboard.dao;
 
-import simpleboard.common.Database;
 import simpleboard.common.DatabaseException;
 import simpleboard.dto.BoardDTO;
 
@@ -10,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BoardDAO extends BaseDAO {
-    private BoardDAO() { }
+    private BoardDAO() {
+    }
 
     public static boolean exists(String boardId) throws DatabaseException {
         Connection conn = getConnection();

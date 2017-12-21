@@ -1,6 +1,5 @@
 package simpleboard.common;
 
-import org.apache.http.HttpRequest;
 import org.apache.http.client.utils.URIBuilder;
 
 import javax.servlet.http.HttpServletRequest;

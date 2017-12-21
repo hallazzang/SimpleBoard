@@ -6,7 +6,9 @@ public class BoardDTO implements Serializable {
     private String id;
     private String name;
 
-    public BoardDTO() { super(); }
+    public BoardDTO() {
+        super();
+    }
 
     public BoardDTO(String id, String name) {
         super();

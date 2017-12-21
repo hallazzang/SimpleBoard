@@ -12,7 +12,9 @@ public class ArticleDTO implements Serializable {
     private String boardId;
     private FileDTO file;
 
-    public ArticleDTO() { super(); }
+    public ArticleDTO() {
+        super();
+    }
 
     public ArticleDTO(Integer id, String title, String content, UserDTO author, Timestamp modifiedAt, String boardId, FileDTO file) {
         super();

@@ -7,7 +7,9 @@ public class FileDTO implements Serializable {
     private String name;
     private String path;
 
-    public FileDTO() { super(); }
+    public FileDTO() {
+        super();
+    }
 
     public FileDTO(Integer id, String name, String path) {
         super();

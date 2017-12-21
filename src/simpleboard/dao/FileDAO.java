@@ -15,34 +15,7 @@ public class FileDAO extends BaseDAO {
     private static final String saveDirectory = "/usr/local/var/simpleboard/uploads";
     private static final int maxSize = 1024 * 1024 * 30;
 
-    private FileDAO() { }
-
-    public static class ProcessResult {
-        private MultipartRequest req;
-        private FileDTO file;
-
-        private ProcessResult() { }
-
-        private ProcessResult(MultipartRequest req, FileDTO file) {
-            this.req = req;
-            this.file = file;
-        }
-
-        public MultipartRequest getReq() {
-            return req;
-        }
-
-        public void setReq(MultipartRequest req) {
-            this.req = req;
-        }
-
-        public FileDTO getFile() {
-            return file;
-        }
-
-        public void setFile(FileDTO file) {
-            this.file = file;
-        }
+    private FileDAO() {
     }
 
     public static ProcessResult processMultipartRequest(HttpServletRequest request)
@@ -141,6 +114,35 @@ public class FileDAO extends BaseDAO {
             throw new DatabaseException(e.getMessage());
         } finally {
             cleanup();
+        }
+    }
+
+    public static class ProcessResult {
+        private MultipartRequest req;
+        private FileDTO file;
+
+        private ProcessResult() {
+        }
+
+        private ProcessResult(MultipartRequest req, FileDTO file) {
+            this.req = req;
+            this.file = file;
+        }
+
+        public MultipartRequest getReq() {
+            return req;
+        }
+
+        public void setReq(MultipartRequest req) {
+            this.req = req;
+        }
+
+        public FileDTO getFile() {
+            return file;
+        }
+
+        public void setFile(FileDTO file) {
+            this.file = file;
         }
     }
 }

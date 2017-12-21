@@ -10,7 +10,7 @@ public class MessageFlasher {
     }
 
     public static FlashedMessage getFlashedMessage(HttpServletRequest request) {
-        FlashedMessage flashedMessage = (FlashedMessage)request.getSession().getAttribute("flashedMessage");
+        FlashedMessage flashedMessage = (FlashedMessage) request.getSession().getAttribute("flashedMessage");
         if (flashedMessage != null) {
             request.getSession().removeAttribute("flashedMessage");
         }

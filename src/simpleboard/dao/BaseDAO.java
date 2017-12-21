@@ -11,7 +11,8 @@ class BaseDAO {
     static PreparedStatement st = null;
     static ResultSet rs = null;
 
-    BaseDAO() { }
+    BaseDAO() {
+    }
 
     static Connection getConnection() {
         return Database.getConnection();

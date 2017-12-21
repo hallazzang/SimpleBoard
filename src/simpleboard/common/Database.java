@@ -5,13 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    private static Connection conn = null;
-
     private static final String url = "jdbc:mysql://mysql:3306/simpleboard?autoReconnect=true&useSSL=false";
     private static final String user = "simpleboard";
     private static final String password = "simpleboard";
-
-    private Database() { }
+    private static Connection conn = null;
 
     static {
         try {
@@ -19,6 +16,9 @@ public class Database {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Cannot load database driver");
         }
+    }
+
+    private Database() {
     }
 
     public static Connection getConnection() {
