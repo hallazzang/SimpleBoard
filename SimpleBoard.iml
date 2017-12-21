@@ -20,5 +20,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.2" level="application_server_libraries" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="mysql-connector-java-5.1.45-bin" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="jbcrypt" level="project" />
+    <orderEntry type="library" name="javax.servlet:jstl:1.2" level="project" />
   </component>
 </module>

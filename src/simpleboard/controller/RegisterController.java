@@ -11,43 +11,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RegisterController", urlPatterns = {"/register.do"})
+@WebServlet(name = "RegisterController", urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
 
-        String userId = req.getParameter("userId");
-        String userName = req.getParameter("userName");
-        String userPw = req.getParameter("userPw");
+        String userId = request.getParameter("userId");
+        String userName = request.getParameter("userName");
+        String userPw = request.getParameter("userPw");
         String role = "user";
 
-        if (userId == "" || userName == "" || userPw == "") {
-            MessageFlasher.flash(req, "입력 필드가 비어 있습니다.", "error");
-            resp.sendRedirect("/register.do");
+        if (userId.equals("") || userName.equals("") || userPw.equals("")) {
+            MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
+            response.sendRedirect("/register");
             return;
         }
 
         try {
             if (UserDAO.idExists(userId)) {
-                MessageFlasher.flash(req, "이미 존재하는 아이디입니다.", "error");
-                resp.sendRedirect("/register.do");
+                MessageFlasher.flash(request, "이미 존재하는 아이디입니다.", "error");
+                response.sendRedirect("/register");
                 return;
             }
 
             UserDAO.register(userId, userName, userPw, role);
         } catch (DatabaseException e) {
-            MessageFlasher.flash(req, e.getMessage(), "error");
-            resp.sendRedirect("/register.do");
+            MessageFlasher.flash(request, e.getMessage(), "exception");
+            response.sendRedirect("/register");
             return;
         }
 
-        MessageFlasher.flash(req, "회원가입이 완료되었습니다.", "success");
-        resp.sendRedirect("/index.jsp");
+        MessageFlasher.flash(request, "회원가입이 완료되었습니다.", "success");
+        response.sendRedirect("/");
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") != null) {
+            MessageFlasher.flash(request, "이미 로그인 되어 있습니다.", "error");
+            response.sendRedirect("/");
+            return;
+        }
+        getServletContext().getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 }

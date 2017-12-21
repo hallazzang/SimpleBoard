@@ -12,18 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "LoginController", urlPatterns = {"/login.do"})
+@WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("utf-8");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
 
-        String userId = req.getParameter("userId");
-        String userPw = req.getParameter("userPw");
+        String userId = request.getParameter("userId");
+        String userPw = request.getParameter("userPw");
 
-        if (userId == "" || userPw == "") {
-            MessageFlasher.flash(req, "입력 필드가 비어 있습니다.", "error");
-            resp.sendRedirect("/login.do");
+        if (userId.equals("") || userPw.equals("")) {
+            MessageFlasher.flash(request, "입력 필드가 비어 있습니다.", "error");
+            response.sendRedirect("/login");
             return;
         }
 
@@ -32,24 +31,26 @@ public class LoginController extends HttpServlet {
         try {
             user = UserDAO.getUser(userId);
         } catch (DatabaseException e) {
-            MessageFlasher.flash(req, e.getMessage(), "error");
-            resp.sendRedirect("/login.do");
+            MessageFlasher.flash(request, e.getMessage(), "exception");
+            response.sendRedirect("/login");
             return;
         }
 
         if (user != null && user.checkPw(userPw)) {
-            req.getSession().setAttribute("user", user);
-            resp.sendRedirect("/index.jsp");
-            return;
+            request.getSession().setAttribute("user", user);
+            response.sendRedirect("/");
         } else {
-            MessageFlasher.flash(req, "아이디 혹은 비밀번호가 틀렸습니다.", "error");
-            resp.sendRedirect("/login.do");
-            return;
+            MessageFlasher.flash(request, "아이디 혹은 비밀번호가 틀렸습니다.", "error");
+            response.sendRedirect("/login");
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") != null) {
+            MessageFlasher.flash(request, "이미 로그인 되어 있습니다.", "error");
+            response.sendRedirect("/");
+            return;
+        }
+        getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 }

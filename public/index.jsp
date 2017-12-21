@@ -1,6 +1,7 @@
 <%@ page import="simpleboard.common.MessageFlasher" %>
 <%@ page import="simpleboard.dto.UserDTO" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html>
 <head>
@@ -9,13 +10,13 @@
 </head>
 <body>
     <% MessageFlasher.renderFlashedMessage(request, response); %>
-    <%
-        UserDTO user = (UserDTO)request.getSession().getAttribute("user");
-        if (user != null) {
-            out.println("<p>반갑습니다, " + user.getName() + "님!</p>");
-        } else { %>
-            <a href="/login.do">로그인</a>해주세요.
-        <% }
-    %>
+    <c:choose>
+        <c:when test="${user != null}">
+            반갑습니다, ${user.name}님
+        </c:when>
+        <c:otherwise>
+            <a href="/login">로그인</a> 해주세요.
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>

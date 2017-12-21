@@ -3,6 +3,11 @@
     <output-path>$PROJECT_DIR$/out/artifacts/SimpleBoard_war</output-path>
     <root id="archive" name="SimpleBoard_war.war">
       <element id="artifact" artifact-name="SimpleBoard:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="javax.servlet:jstl:1.2" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
