@@ -103,7 +103,12 @@ public class ArticleDAO extends BaseDAO {
             st.setInt(2, (page - 1) * 15);
             rs = st.executeQuery();
 
-            result = new ArrayList<>();
+            if (!rs.next()) {
+                return null;
+            } else {
+                rs.previous();
+                result = new ArrayList<>();
+            }
             while (rs.next()) {
                 UserDTO author = new UserDTO(rs.getString("u.id"), rs.getString("u.name"), null, rs.getString("u.role"));
 

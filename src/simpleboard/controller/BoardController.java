@@ -31,7 +31,6 @@ public class BoardController extends HttpServlet {
                 page = 1;
             } else {
                 page = Integer.parseInt(pageString);
-
                 if (page < 1) {
                     throw new NumberFormatException();
                 }
@@ -50,6 +49,11 @@ public class BoardController extends HttpServlet {
 
             boards = BoardDAO.getBoards();
             articles = ArticleDAO.getArticles(boardId, page, ArticleDAO.SortType.DESCENDING);
+            if (articles == null && page > 0) {
+                MessageFlasher.flash(request, "존재하지 않는 페이지입니다.", "error");
+                Redirecter.forcedRedirect("/board?boardId=" + boardId, request, response);
+                return;
+            }
         } catch (DatabaseException e) {
             MessageFlasher.flash(request, e.getMessage(), "exception");
             Redirecter.forcedRedirect("/board", request, response);
