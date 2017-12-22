@@ -1,14 +1,14 @@
 # SimpleBoard
 
-Simple JSP/Servlet board application based on Bootstrap 4.
+Simple JSP/Servlet board application powered by Bootstrap 4.
 
 ![screenshot](screenshot.png)
 
 ## Features
 
-- Secure password hashing (via bCrypt)
+- Secure password hashing (using bCrypt)
 - No SQL injection anymore
-- Seamless interface
+- Beautiful interface
 - Easy setup
 
 ## Installation
