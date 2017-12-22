@@ -22,3 +22,37 @@ when you try to visit `:8888/board`. To fix this, you should create a board manu
 4. Click **New item** and create new board.
 
 Later, you should delete `adminer` service from your stack - edit `docker/compose.yml`.
+
+## Project Structure
+
+```
+.
+├── README.md
+├── SimpleBoard.iml
+├── dbschema.sql
+├── dockerize.sh
+├── up.sh
+├── down.sh
+├── mysqld.cnf
+├── lib                            // common libraries(mysql driver, apache httpclient, cos, ...)
+│   └── *.jar
+├── public                         // public assets
+│   ├── css
+│   │   └── *.css
+│   └── js
+│       └── *.js
+├── src                            // servlets(controllers), DAOs, DTOs, utility clasees
+│   └── simpleboard
+│       ├── common
+│       │   └── *.java
+│       ├── controller
+│       │   └── *.java
+│       ├── dao
+│       │   └── *.java
+│       └── dto
+│           └── *.java
+└── web                            // jsp views
+    ├── common/                    // commonly used components
+    │   └── *.jsp
+    └── *.jsp
+```
