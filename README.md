@@ -4,6 +4,13 @@ Simple JSP/Servlet board application based on Bootstrap 4.
 
 ![screenshot](screenshot.png)
 
+## Features
+
+- Secure password hashing (via bCrypt)
+- No SQL injection anymore
+- Seamless interface
+- Easy setup
+
 ## Installation
 
 Clone this repository and run `up.sh`, which will pull the docker images(`hallazzang/simpleboard`, `mysql`, `adminer`)
