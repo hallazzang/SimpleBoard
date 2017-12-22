@@ -1,5 +1,7 @@
 # SimpleBoard
 
+Simple JSP/Servlet board application based on Bootstrap 4.
+
 ![screenshot](screenshot.png)
 
 ## Installation
@@ -24,6 +26,13 @@ when you try to visit `:8888/board`. To fix this, you should create a board manu
 4. Click **New item** and create new board.
 
 Later, you should delete `adminer` service from your stack - edit `docker/compose.yml`.
+
+## Development environment
+
+- macOS High Sierra 10.13.2
+- IntelliJ IDEA 2017.3.1
+- JDK 8u151
+- Tomcat 9.0.2
 
 ## Project Structure
 
