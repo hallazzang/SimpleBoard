@@ -27,7 +27,7 @@
           <form action="<c:url value="/login?next=/board"/>" method="post" class="form-inline">
             <input class="form-control mr-sm-2" type="text" name="userId" size="14" placeholder="아이디" aria-label="ID"
                    required>
-            <input class="form-control mr-sm-2" type="text" name="userPw" size="14" placeholder="비밀번호"
+            <input class="form-control mr-sm-2" type="password" name="userPw" size="14" placeholder="비밀번호"
                    aria-label="Password" required>
             <button class="btn btn-outline-primary my-2 my-sm-0 mr-2" type="submit">로그인</button>
             <a class="btn btn-outline-success my-2 my-sm-0" href="<c:url value="/register"/>">회원가입</a>
