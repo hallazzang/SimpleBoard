@@ -1,5 +1,7 @@
 # SimpleBoard
 
+![screenshot](screenshot.png)
+
 ## Installation
 
 Clone this repository and run `up.sh`, which will pull the docker images(`hallazzang/simpleboard`, `mysql`, `adminer`)
