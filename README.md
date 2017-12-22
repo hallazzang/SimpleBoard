@@ -34,6 +34,14 @@ Later, you should delete `adminer` service from your stack - edit `docker/compos
 - JDK 8u151
 - Tomcat 9.0.2
 
+### Libraries/Frameworks
+
+- Bootstrap 4 (beta)
+- Apache HttpClient
+- cos.jar
+- MySQL Connector
+- JSTL
+
 ## Project Structure
 
 ```
